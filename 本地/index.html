@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="js/react.development.js"></script>
+	<script src="js/react-dom.development.js"></script>
+	<script src="js/babel.min.js"></script>
+	<script src="js/data.js"></script>
+	<style>
+		.panel{
+			border:1px solid #000;
+			width: 80%;
+			margin:0 auto;
+		}
+		.title{
+			margin:0;
+			padding:10px;
+			background: #CFCFCF;
+		}
+		.message{
+			color:#ccc;
+		}
+		.vip{
+			color:#F00;
+		}
+	</style>
+</head>
+<body>
+	<div id="root"></div>
+	<script type="text/babel">
+	class Group extends React.Component{
+		render(){
+			return(
+				<div>
+					<h2 className="title">{this.props.data.name}</h2>
+					<ul>
+						{
+							this.props.data.list.map((elem,index)=>{
+								return (
+									<li key={index}>
+										<p className={elem.vip?"vip":""}>{elem.username}</p>
+										<p className="message">{elem.message}</p>
+									</li>
+								)
+							})
+						}
+					</ul>
+				</div>
+			)
+		}
+	}
+	class Panel extends React.Component{
+		render(){
+			return (
+				<div className="panel">
+					{
+						Object.keys(this.props.data).map((elem,index) => {
+							//return <div key={index}>{this.props.data[elem].name}</div>
+							return <Group data={this.props.data[elem]} key={index}/>
+						})
+					}
+				</div>
+			)
+		}
+	}
+	ReactDOM.render(
+		<Panel data={dataList}/>,
+		document.getElementById('root')
+	);
+	</script>
+</body>
+</html>

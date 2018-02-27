@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="js/react.development.js"></script>
+	<script src="js/react-dom.development.js"></script>
+	<script src="js/babel.min.js"></script>
+	<link rel="stylesheet" href="css/common.css">
+	<link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+	<div id="root"></div>
+	<script type="text/babel">
+		let data = [
+		    {date: '今天', time: '11:20', name: 'Matt', content: '你好', avatar: "./img/1.jpg"},
+		    {
+		        date: '今天', time: '11:20', name: 'Jenny', content: '你好', avatar: "./img/1.jpg",
+		        subComment: [
+		            { time: '11:20',name: 'Sal', content: '你好', avatar: "./img/1.jpg"},
+		            { time: '11:20',name: 'Jenny', content: '你好', avatar: "./img/1.jpg"},
+		            { time: '11:20',name: 'Elliot', content: '你好', avatar: "./img/1.jpg"},
+		            { time: '11:20',name: 'Molly', content: '你好', avatar: "./img/1.jpg"}
+		        ]
+		    },
+		    {date: '今天', time: '11:20', name: 'Molly', content: '你好', avatar: "parc/img/1.jpg"},
+		    {date: '今天', time: '11:20', name: 'Elliot', content: '你好', avatar: "parc/img/2.jpg"},
+		    {date: '昨天', time: '11:20', name: 'Sal', content: '你好', avatar: "parc/img/2.jpg"},
+		    {date: '昨天', time: '11:20', name: 'Mike', content: '你好', avatar: "parc/img/2.jpg"},
+		    {date: '前天', time: '11:20', name: 'Sal', content: '你好', avatar: "parc/img/2.jpg"},
+		    {
+		        date: '前天', time: '11:20', name: 'Hurley', content: '你好', avatar: "parc/img/2.jpg",
+		        subComment: [
+		            {
+		                time: '11:20',name: 'Sal', content: '你好', avatar: "parc/img/1.jpg",
+		                subComment: [
+		                    {
+		                         time: '11:20',name: 'Sal', content: '你好', avatar: "parc/img/3.jpg",
+		                        subComment: [
+		                            { time: '11:20',name: 'Molly', content: '你好', avatar: "parc/img/3.jpg"}
+		                        ]
+		                    },
+		                    { time: '11:20',name: 'Jenny', content: '你好', avatar: "parc/img/3.jpg"},
+		                    { time: '11:20',name: 'Elliot', content: '你好', avatar: "parc/img/2.jpg"},
+		                    { time: '11:20',name: 'Molly', content: '你好', avatar: "parc/img/1.jpg"}
+		                ]
+		            }
+		        ]
+		    },
+		    {date: '前天',  time: '11:20', name: 'Ben', content: '你好', avatar: "parc/img/3.jpg"},
+		    {date: '前天',  time: '11:20', name: 'Jane', content: '你好', avatar: "parc/img/3.jpg"}
+		];
+		class Top extends React.Component{
+			render(){
+				return <h1 className="box-top">Component</h1>
+			}
+		}
+		class Days extends React.Component{
+			render(){
+				return <p className="top">{this.props.name}</p>
+			}
+		}
+		class Replyimg extends React.Component{
+			render(){
+				return <img src={this.props.src} alt=""/>
+			}
+		}
+		class Reply extends React.Component{
+			render(){
+				return (
+					<div className="box-bottom-reply">
+						<p>{this.props.name}</p>
+						<p>{this.props.comments}</p>
+						<a className="gray" href="">回复</a>
+					</div>
+				)
+			}	
+		}
+		class Comments extends React.Component{
+			render(){
+				return (
+					<div className={this.props.className}>
+						<Replyimg src={this.props.src}/>
+						<Reply name={this.props.name} comments={this.props.comments}/>
+						{this.props.children}
+					</div>
+				)
+			}
+		}
+		ReactDOM.render(
+			<div className="box">
+				<Top/>
+				<Days name="今天"/>
+				<Comments className="box-bottom" src="./img/1.jpg" name="老李" comments="你好">
+					<Comments className="box-bottom" src="./img/2.jpg" name="老王" comments="老李现在发达了啊">
+						<Comments className="box-bottom" src="./img/3.jpg" name="老赵" comments="那是啊"/>
+					</Comments>
+				</Comments>
+				<Comments className="box-bottom" src="./img/2.jpg" name="老王" comments="老李现在发达了啊">
+					<Comments className="box-bottom" src="./img/3.jpg" name="老赵" comments="那是啊"/>
+					<Comments className="box-bottom" src="./img/3.jpg" name="老赵" comments="那是啊"/>
+				</Comments>
+				<Comments className="box-bottom" src="./img/3.jpg" name="老赵" comments="那是啊"/>
+				<Days name="昨天"/>
+				<Days name="前天"/>
+
+			</div>,
+			document.getElementById('root')
+		);
+	</script>
+</body>
+</html>
